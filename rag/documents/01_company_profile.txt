@@ -1,0 +1,54 @@
+# TechVex Solutions — Company Profile
+
+## About TechVex Solutions
+
+TechVex Solutions is a leading enterprise software company founded in 2015, headquartered in Bangalore, India with offices in Mumbai, Delhi, and Hyderabad.
+
+We specialize in AI-powered enterprise software including CRM, ERP, Analytics, and Cloud Infrastructure solutions that help businesses streamline operations, improve customer relationships, and drive sustainable growth.
+
+**Mission:** To empower businesses with intelligent software that automates complexity and amplifies human potential.
+
+**Vision:** To be India's most trusted enterprise software partner by 2027.
+
+## Company Facts
+
+- Founded: 2015
+- Headquarters: Bangalore, India
+- Employees: 850+
+- Clients: 2,500+ across 15 countries
+- Annual Revenue: ₹120 Crore (FY 2024-25)
+- NPS Score: 72 (Industry leading)
+- Certifications: ISO 27001, SOC 2 Type II, GDPR Compliant
+
+## Industries Served
+
+- Manufacturing
+- Financial Services & Banking
+- Healthcare & Pharmaceuticals
+- Retail & E-Commerce
+- Real Estate & Construction
+- Education & EdTech
+- Logistics & Supply Chain
+- IT & Technology Services
+
+## Awards & Recognition
+
+- Deloitte Technology Fast 50 India — 2023, 2024
+- NASSCOM Emerge 50 — 2022
+- CIO Choice Award for Best CRM — 2024
+- Great Place to Work Certified — 2023, 2024
+
+## Support & Service
+
+- 24/7 Technical Support via phone, email, and chat
+- Dedicated Customer Success Manager for Enterprise clients
+- Average response time: < 2 hours
+- Uptime SLA: 99.9%
+- Support languages: English, Hindi, Kannada, Tamil, Telugu
+
+## Contact Information
+
+- Sales: sales@techvex.com | +91-80-4567-8900
+- Support: support@techvex.com | +91-80-4567-8901
+- Website: www.techvex.com
+- LinkedIn: linkedin.com/company/techvex-solutions

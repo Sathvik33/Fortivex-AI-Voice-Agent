@@ -1,0 +1,98 @@
+# TechVex Solutions — Pricing Information
+
+## Pricing Philosophy
+
+TechVex believes in transparent, value-based pricing. All plans include free onboarding, training, and 24/7 support. No hidden charges.
+
+---
+
+## TechVex CRM Pro — Pricing
+
+### Starter Plan
+- **Price:** ₹1,499 per user per month (billed annually) | ₹1,799/user/month (monthly)
+- **Users:** 1-10 users
+- **Features:** Core CRM, 5,000 contacts, email integration, basic reports
+- **Storage:** 10 GB
+
+### Growth Plan
+- **Price:** ₹2,999 per user per month (billed annually)
+- **Users:** 11-50 users
+- **Features:** All Starter features + WhatsApp integration, AI lead scoring, workflow automation, 50,000 contacts
+- **Storage:** 50 GB
+
+### Professional Plan
+- **Price:** ₹4,999 per user per month (billed annually)
+- **Users:** 51-200 users
+- **Features:** All Growth features + Custom fields, API access, advanced analytics, 500,000 contacts, dedicated support
+- **Storage:** 200 GB
+
+### Enterprise Plan
+- **Price:** Custom pricing (contact sales)
+- **Users:** 200+ users
+- **Features:** All Professional features + Custom integrations, on-premise option, SLA guarantee, dedicated account manager, unlimited contacts
+- **Storage:** Unlimited
+- **Typical Range:** ₹8,000-₹15,000 per user per month
+
+### Annual Discounts
+- Pay annually: Save 15%
+- 3-year commitment: Save 25%
+- Startup discount (< 3 years old, < 50 employees): Additional 20% off
+
+---
+
+## TechVex ERP Suite — Pricing
+
+### SME Edition (50-250 employees)
+- **One-time Implementation:** ₹8-15 Lakhs
+- **Annual Maintenance:** 18% of implementation cost
+- **Modules:** Finance, HR, Inventory (choose 3)
+
+### Mid-Market Edition (250-1000 employees)
+- **One-time Implementation:** ₹20-50 Lakhs
+- **Annual Maintenance:** 18% of implementation cost
+- **Modules:** All modules included
+
+### Enterprise Edition (1000+ employees)
+- **Custom Pricing**
+- Contact our enterprise sales team
+- Typical range: ₹1-5 Crore
+
+---
+
+## TechVex Analytics Platform — Pricing
+
+- **Starter:** ₹25,000/month (up to 5 users, 10 data sources)
+- **Business:** ₹60,000/month (up to 25 users, 50 data sources)
+- **Enterprise:** Custom pricing
+
+---
+
+## Implementation & Training
+
+- Standard implementation: Included in first year
+- Express implementation (< 30 days): ₹50,000 additional
+- Custom training workshops: ₹25,000 per day
+- Online training portal: Free for all plans
+
+---
+
+## Free Trial
+
+- **CRM Pro:** 14-day free trial, no credit card required
+- **ERP Suite:** Personalized demo available
+- **Analytics Platform:** 30-day free trial
+
+---
+
+## Payment Terms
+
+- Monthly billing: Due on 1st of each month
+- Annual billing: Due at the start of the year
+- Accepted: Bank transfer, UPI, credit card, cheque
+- GST: 18% applicable
+
+---
+
+## ROI Guarantee
+
+TechVex guarantees measurable ROI within 6 months of full deployment. If you don't see results, we extend your contract free of charge.

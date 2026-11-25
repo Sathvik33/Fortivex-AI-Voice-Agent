@@ -1,0 +1,67 @@
+# TechVex Solutions — Frequently Asked Questions
+
+## General Questions
+
+**Q: What is TechVex Solutions?**
+A: TechVex Solutions is an Indian enterprise software company that provides AI-powered CRM, ERP, Analytics, and Cloud solutions. We serve 2,500+ clients across India and 15 countries.
+
+**Q: How is TechVex different from other CRM providers like Salesforce or HubSpot?**
+A: TechVex is built specifically for Indian businesses with GST compliance, regional language support, WhatsApp integration, Tally integration, and India-specific business workflows. Our pricing is also significantly more affordable than global platforms, with dedicated 24/7 support in Indian languages.
+
+**Q: Do you offer a free trial?**
+A: Yes! CRM Pro offers a 14-day free trial with no credit card required. Analytics Platform offers a 30-day trial. Contact us for an ERP demo.
+
+**Q: Is my data safe with TechVex?**
+A: Absolutely. We are ISO 27001 certified, SOC 2 Type II compliant, and follow GDPR standards. All data is encrypted at rest and in transit. Data is stored in Indian data centers.
+
+---
+
+## Implementation Questions
+
+**Q: How long does implementation take?**
+A: CRM Pro implementation takes 1-2 weeks. ERP Suite typically takes 2-6 months depending on company size. We offer an Express Implementation option (< 30 days) for urgency.
+
+**Q: Do you provide training?**
+A: Yes. All plans include free online training via our learning portal (100+ video tutorials). We also offer on-site training workshops at ₹25,000/day.
+
+**Q: Can I migrate data from my current system?**
+A: Yes. We provide free data migration support for contacts, leads, accounts, and historical data from most major CRM systems (Salesforce, Zoho, HubSpot, etc.). ERP data migration is project-based.
+
+---
+
+## Technical Questions
+
+**Q: Can TechVex CRM integrate with WhatsApp?**
+A: Yes. TechVex CRM Pro (Growth plan and above) includes official WhatsApp Business API integration for sending messages, tracking conversations, and automating follow-ups.
+
+**Q: Does TechVex work offline?**
+A: TechVex is a cloud-based solution and requires internet connectivity. The mobile app caches recently viewed records for offline reading, but editing requires connectivity.
+
+**Q: What APIs do you provide?**
+A: We offer a comprehensive REST API and webhooks for all plans (Professional and above). Our API documentation is available at docs.techvex.com.
+
+**Q: Does TechVex support multiple currencies?**
+A: Yes. TechVex CRM and ERP support multi-currency transactions including INR, USD, EUR, GBP, AED, and SGD.
+
+---
+
+## Pricing & Billing Questions
+
+**Q: Can I add or remove users anytime?**
+A: Yes. Users can be added anytime (billed prorated). Users can be removed at the next billing cycle.
+
+**Q: Do you offer discounts for startups or NGOs?**
+A: Yes. We offer a 20% startup discount for companies less than 3 years old with fewer than 50 employees. NGOs and educational institutions get 30% off.
+
+**Q: What happens after the free trial?**
+A: After the trial, you can choose a paid plan. Your data is preserved. If you don't upgrade within 30 days, your data is archived (recoverable for 90 days).
+
+---
+
+## Support Questions
+
+**Q: What is your support SLA?**
+A: Critical issues (system down): Response within 1 hour. High priority: 4 hours. Medium: 1 business day. Low: 3 business days.
+
+**Q: Do you offer phone support in Hindi?**
+A: Yes. Our support team can assist in English, Hindi, Kannada, Tamil, and Telugu.

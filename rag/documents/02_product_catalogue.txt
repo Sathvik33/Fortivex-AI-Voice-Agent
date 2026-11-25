@@ -1,0 +1,88 @@
+# TechVex Solutions — Product Catalogue
+
+## 1. TechVex CRM Pro
+
+**Overview:** AI-powered Customer Relationship Management platform designed for Indian enterprises.
+
+**Key Features:**
+- Contact and lead management with AI scoring
+- Sales pipeline visualization (Kanban & funnel views)
+- WhatsApp, Email, and SMS integration
+- AI-powered lead scoring (0-100 scale)
+- Automated follow-up workflows
+- Mobile app for iOS and Android
+- Regional language support (12 Indian languages)
+- GST-compliant invoice generation
+- Integration with Tally, Zoho Books, QuickBooks
+- Advanced analytics and custom reports
+
+**Best For:** Sales teams of 10-500 people
+
+---
+
+## 2. TechVex ERP Suite
+
+**Overview:** Comprehensive Enterprise Resource Planning for manufacturing and services companies.
+
+**Modules:**
+- Finance & Accounting (GST, TDS, MIS reports)
+- Human Resources & Payroll (PF, ESIC compliant)
+- Supply Chain & Inventory Management
+- Production Planning & Quality Control
+- Procurement & Vendor Management
+- Project Management
+- Asset Management
+- Business Intelligence Dashboard
+
+**Best For:** Companies with 100-5000 employees in manufacturing, trading, or services
+
+---
+
+## 3. TechVex Analytics Platform
+
+**Overview:** Self-service business intelligence and analytics powered by AI.
+
+**Capabilities:**
+- Drag-and-drop dashboard builder
+- Connects to 150+ data sources
+- Real-time data processing
+- Predictive analytics with ML models
+- Natural language querying (ask questions in plain English/Hindi)
+- Automated insights and anomaly detection
+- Scheduled reports via email/WhatsApp
+- Mobile-first design
+
+**Best For:** Data teams and business analysts
+
+---
+
+## 4. TechVex Cloud Infrastructure
+
+**Overview:** Managed cloud hosting and DevOps services on AWS and Azure.
+
+**Services:**
+- Managed Kubernetes clusters
+- Auto-scaling infrastructure
+- 24/7 monitoring and alerting
+- Disaster recovery with RTO < 4 hours
+- Security scanning and compliance monitoring
+- CI/CD pipeline setup
+- Database management (PostgreSQL, MySQL, MongoDB)
+
+**Best For:** Tech companies and digital transformation projects
+
+---
+
+## 5. TechVex AI Suite (New — 2025)
+
+**Overview:** Pre-built AI capabilities that plug into any TechVex product.
+
+**Features:**
+- AI Sales Voice Agent (like this one!)
+- Document processing with OCR and AI
+- Customer sentiment analysis
+- Demand forecasting
+- Churn prediction
+- Intelligent chatbot builder
+
+**Best For:** Companies wanting to AI-enable their operations quickly

@@ -1,0 +1,70 @@
+# TechVex Solutions — Terms and Conditions Summary
+
+## Service Agreement Overview
+
+This document summarizes the key terms of TechVex Solutions service agreements. Full legal terms are available at www.techvex.com/legal.
+
+## Subscription Terms
+
+1. **Subscription Period:** Annual or monthly subscriptions, auto-renewing unless cancelled 30 days before renewal.
+
+2. **Cancellation:** Cancel anytime. Annual plan refund: Pro-rated for unused full months. Monthly plan: No refund for current month.
+
+3. **Data Ownership:** You own your data. TechVex does not sell, rent, or share your data with third parties.
+
+4. **Data Export:** Export your data in CSV, Excel, or JSON format anytime from the settings menu.
+
+5. **Data Retention:** After account closure, data is retained for 90 days then permanently deleted. We provide a final export before deletion.
+
+## Service Level Agreement (SLA)
+
+- **Availability:** 99.9% uptime guarantee (excluding scheduled maintenance)
+- **Scheduled Maintenance:** Sundays 2 AM - 5 AM IST (maximum 4 hours/month)
+- **Response Times:** Critical: 1 hour | High: 4 hours | Medium: 1 business day
+- **SLA Credits:** If uptime falls below 99.9%, receive service credits per our SLA policy
+
+## Security & Privacy
+
+1. **Data Encryption:** AES-256 encryption at rest, TLS 1.3 in transit.
+2. **Access Control:** Role-based access control (RBAC), multi-factor authentication (MFA) available.
+3. **Audit Logs:** All actions logged and retained for 2 years.
+4. **Penetration Testing:** Annual third-party security audits.
+5. **GDPR & IT Act Compliance:** We comply with Indian IT Act 2000 and GDPR for international clients.
+
+## Acceptable Use
+
+TechVex services may not be used for:
+- Sending unsolicited marketing (spam)
+- Storing or transmitting illegal content
+- Attempting to compromise the security of the platform
+- Reselling access without written authorization
+
+## Support Terms
+
+- 24/7 technical support via chat, email, and phone
+- Support languages: English, Hindi, Kannada, Tamil, Telugu
+- Phone support: +91-80-4567-8901
+- Email: support@techvex.com
+
+## Payment Terms
+
+- Invoices due within 15 days of issuance
+- Late payment penalty: 1.5% per month
+- Disputed invoices: Notify within 7 days
+- GST 18% applicable on all services
+
+## Intellectual Property
+
+TechVex retains all rights to the software. Clients receive a non-exclusive license to use the software during the subscription period. Clients retain ownership of all data stored in the system.
+
+## Warranty & Disclaimers
+
+TechVex warrants that the software will substantially perform as described in documentation. We do not warrant that the software will be error-free. Maximum liability is limited to fees paid in the 12 months preceding a claim.
+
+## Governing Law
+
+This agreement is governed by the laws of India. Disputes shall be resolved through arbitration in Bangalore, Karnataka, India.
+
+---
+
+For questions about these terms, contact: legal@techvex.com

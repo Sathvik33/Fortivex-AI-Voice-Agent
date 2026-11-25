@@ -1,0 +1,106 @@
+# TechVex Solutions — Product Features & Specifications
+
+## TechVex CRM Pro — Detailed Features
+
+### Contact & Lead Management
+- Unlimited contact records (Growth plan and above)
+- 360-degree customer view (all interactions, emails, calls, tasks)
+- Lead capture from website forms, WhatsApp, email, and social media
+- Duplicate detection and automatic merging
+- Custom fields (up to 50 per entity)
+- Tags and segmentation
+
+### AI-Powered Sales Features
+- AI lead scoring (0-100) based on engagement, firmographics, and behavior
+- Predictive deal closure probability
+- Next best action recommendations
+- Automated lead assignment based on territory and workload
+- Smart follow-up reminders
+
+### Pipeline Management
+- Multiple sales pipelines
+- Drag-and-drop deal management
+- Stage-based probability weighting
+- Deal aging alerts
+- Revenue forecasting
+
+### Communication Tools
+- Two-way email sync (Gmail, Outlook, custom SMTP)
+- WhatsApp Business integration
+- SMS integration (Twilio, MSG91, Exotel)
+- Call logging with VoIP integration
+- Meeting scheduling with calendar sync (Google, Outlook)
+- Email templates and sequences
+
+### Automation
+- Visual workflow builder
+- Trigger-based automation (time, event, field change)
+- Auto-assign leads
+- Automated email sequences
+- SLA tracking and escalation
+
+### Reporting & Analytics
+- 50+ pre-built reports
+- Custom report builder
+- Real-time dashboards
+- Sales leaderboard
+- Activity tracking
+- Revenue analytics by product, region, and salesperson
+
+### Mobile App
+- iOS and Android native apps
+- Offline mode for recent records
+- Business card scanner
+- Voice notes
+- GPS check-in for field sales
+
+---
+
+## TechVex ERP Suite — Technical Specifications
+
+### Financial Module
+- Multi-company, multi-branch accounting
+- GST returns (GSTR-1, GSTR-3B, GSTR-9) automated
+- TDS and TCS computation
+- Bank reconciliation
+- Multi-currency with real-time exchange rates
+- P&L, Balance Sheet, Cash Flow statements
+- Budget vs Actual tracking
+
+### HR & Payroll
+- Employee lifecycle management
+- Attendance (biometric, app, manual)
+- Leave management (all statutory leave types)
+- Payroll with PF, ESIC, PT, TDS computation
+- Form 16 and payslip generation
+- Performance management and appraisal
+
+### Inventory Management
+- Multi-warehouse management
+- Batch and serial number tracking
+- FIFO/LIFO/Weighted Average costing
+- Minimum stock alerts
+- Barcode/QR code generation
+- Material Requirements Planning (MRP)
+
+### Technology Stack
+- Backend: Java / Node.js microservices
+- Database: PostgreSQL with read replicas
+- Frontend: React.js Progressive Web App
+- Hosting: AWS India region (Mumbai)
+- Security: AES-256 encryption, MFA, role-based access
+- Uptime: 99.9% SLA
+
+---
+
+## System Requirements (Cloud)
+- Browser: Chrome 80+, Firefox 75+, Edge 80+, Safari 14+
+- Internet: 5 Mbps minimum (20 Mbps recommended for video features)
+- Mobile: iOS 13+ or Android 9+
+
+## System Requirements (On-Premise ERP)
+- Server OS: Windows Server 2019+ or Ubuntu 20.04+
+- RAM: 32 GB minimum (64 GB recommended)
+- CPU: 8 cores minimum
+- Storage: 500 GB SSD minimum
+- Database: PostgreSQL 14+
