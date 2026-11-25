@@ -7,6 +7,7 @@ import os
 import io
 import uuid
 import base64
+import asyncio
 import logging
 import tempfile
 from pathlib import Path
@@ -138,78 +139,84 @@ class LoginRequest(BaseModel):
 # ─── AUTH / CUSTOMER LOGIN ────────────────────────────────────────────────────
 
 @app.post("/api/auth/login")
-def login_customer(req: LoginRequest):
+async def login_customer(req: LoginRequest):
     """Sign in or register a customer using name and/or email."""
     from services.crm import get_customer_by_email, get_customer_by_name, create_customer, update_customer
 
-    name = (req.name or "").strip() or None
-    email = (req.email or "").strip() or None
-    if not name and not email:
-        raise HTTPException(status_code=400, detail="Please provide at least your name or email.")
+    def _do_login():
+        name = (req.name or "").strip() or None
+        email = (req.email or "").strip() or None
+        if not name and not email:
+            raise HTTPException(status_code=400, detail="Please provide at least your name or email.")
 
-    existing = None
-    if email:
-        existing = get_customer_by_email(email)
-    if not existing and name:
-        existing = get_customer_by_name(name)
+        existing = get_customer_by_email(email) if email else None
+        if not existing and name:
+            existing = get_customer_by_name(name)
 
-    if existing:
-        cid = str(existing["id"])
-        updates = {}
-        if name and not existing.get("name"):
-            updates["name"] = name
-        if email and not existing.get("email"):
-            updates["email"] = email
-        if updates:
-            update_customer(cid, updates)
-        display_name = name or existing.get("name") or (email.split("@")[0] if email else "there")
-        display_email = email or existing.get("email") or ""
+        if existing:
+            cid = str(existing["id"])
+            updates = {}
+            if name and not existing.get("name"):
+                updates["name"] = name
+            if email and not existing.get("email"):
+                updates["email"] = email
+            if updates:
+                update_customer(cid, updates)
+            display_name = name or existing.get("name") or (email.split("@")[0] if email else "there")
+            display_email = email or existing.get("email") or ""
+            return {
+                "customer_id": cid,
+                "name": display_name,
+                "email": display_email,
+                "returning": True,
+                "greeting": f"Welcome back, {display_name}! How can I help you today?",
+            }
+
+        display_name = name or (email.split("@")[0] if email else "Guest")
+        cid = create_customer({"name": display_name, "email": email})
+        if not cid:
+            raise HTTPException(status_code=500, detail="Could not create customer profile.")
         return {
             "customer_id": cid,
             "name": display_name,
-            "email": display_email,
-            "returning": True,
-            "greeting": f"Welcome back, {display_name}! How can I help you today?",
+            "email": email or "",
+            "returning": False,
+            "greeting": f"Hello {display_name}! Welcome to TechVex Solutions. How can I help you today?",
         }
 
-    # New customer
-    display_name = name or (email.split("@")[0] if email else "Guest")
-    cid = create_customer({"name": display_name, "email": email})
-    if not cid:
-        raise HTTPException(status_code=500, detail="Could not create customer profile.")
-    return {
-        "customer_id": cid,
-        "name": display_name,
-        "email": email or "",
-        "returning": False,
-        "greeting": f"Hello {display_name}! Welcome to TechVex Solutions. How can I help you today?",
-    }
+    return await asyncio.to_thread(_do_login)
 
 
 # ─── HEALTH ───────────────────────────────────────────────────────────────────
 
 @app.get("/api/health")
-def get_health():
-    """Return health status for Database, Ollama, STT, TTS, and RAG."""
+async def get_health():
+    """Return health status concurrently for Database, LLM, STT, TTS, and RAG."""
     from database.db import check_db_health
     from agent.tools import check_ollama_health
     from voice.tts import check_tts_health
     from rag.retriever import check_rag_health
 
+    db_res, llm_res, tts_res, rag_res = await asyncio.gather(
+        asyncio.to_thread(check_db_health),
+        asyncio.to_thread(check_ollama_health),
+        asyncio.to_thread(check_tts_health),
+        asyncio.to_thread(check_rag_health),
+    )
     return {
-        "database": check_db_health(),
-        "ollama": check_ollama_health(),
+        "database": db_res,
+        "ollama": llm_res,
         "stt": {"status": "healthy", "model": os.getenv("WHISPER_MODEL", "small")},
-        "tts": check_tts_health(),
-        "rag": check_rag_health(),
+        "tts": tts_res,
+        "rag": rag_res,
     }
 
 
 # ─── CHAT & VOICE ─────────────────────────────────────────────────────────────
 
 @app.post("/api/chat/text")
-def chat_text(req: TextChatRequest):
-    """Process a text message through the LangGraph sales agent."""
+async def chat_text(req: TextChatRequest):
+    """Process a text message through the LangGraph sales agent without blocking the event loop."""
     if not req.message.strip():
         raise HTTPException(status_code=400, detail="Message cannot be empty")
 
@@ -217,7 +224,8 @@ def chat_text(req: TextChatRequest):
     from voice.tts import synthesize_speech, audio_to_bytes
 
     session_id = req.session_id or str(uuid.uuid4())
-    result = process_message(
+    result = await asyncio.to_thread(
+        process_message,
         session_id=session_id,
         message=req.message.strip(),
         customer_id=req.customer_id,
@@ -227,7 +235,9 @@ def chat_text(req: TextChatRequest):
     audio_b64 = None
     if req.include_tts and result.get("response"):
         try:
-            tts_res = synthesize_speech(result["response"], result.get("detected_language", "en"))
+            tts_res = await asyncio.to_thread(
+                synthesize_speech, result["response"], result.get("detected_language", "en")
+            )
             if tts_res:
                 arr, sr = tts_res
                 wav_bytes = audio_to_bytes(arr, sr)
@@ -246,7 +256,7 @@ async def chat_voice(
     customer_id: Optional[str] = Form(None),
     conversation_history: str = Form("[]"),
 ):
-    """Process uploaded browser audio: Decode -> STT -> LangGraph -> TTS."""
+    """Process uploaded browser audio asynchronously: Decode -> STT -> LangGraph -> TTS."""
     import json
     from voice.stt import transcribe_audio
     from voice.tts import synthesize_speech, audio_to_bytes
@@ -257,7 +267,7 @@ async def chat_voice(
         raise HTTPException(status_code=400, detail="Empty audio upload")
 
     try:
-        audio_arr, sr = decode_audio_bytes(raw_bytes)
+        audio_arr, sr = await asyncio.to_thread(decode_audio_bytes, raw_bytes)
     except Exception as e:
         logger.error(f"Audio decode error: {e}")
         raise HTTPException(status_code=400, detail=f"Could not decode audio: {e}")
@@ -265,7 +275,7 @@ async def chat_voice(
     if len(audio_arr) < sr * 0.25:
         return {"empty_audio": True, "transcript": "", "response": ""}
 
-    transcript, detected_lang, confidence = transcribe_audio(audio_arr, sr)
+    transcript, detected_lang, confidence = await asyncio.to_thread(transcribe_audio, audio_arr, sr)
     if not transcript or len(transcript.strip()) < 2:
         return {"empty_audio": True, "transcript": "", "response": ""}
 
@@ -275,7 +285,8 @@ async def chat_voice(
         history = []
 
     sid = session_id or str(uuid.uuid4())
-    result = process_message(
+    result = await asyncio.to_thread(
+        process_message,
         session_id=sid,
         message=transcript,
         customer_id=customer_id or None,
@@ -285,7 +296,7 @@ async def chat_voice(
     audio_b64 = None
     if result.get("response"):
         try:
-            tts_res = synthesize_speech(result["response"], detected_lang)
+            tts_res = await asyncio.to_thread(synthesize_speech, result["response"], detected_lang)
             if tts_res:
                 arr, out_sr = tts_res
                 wav_bytes = audio_to_bytes(arr, out_sr)
@@ -301,15 +312,16 @@ async def chat_voice(
 
 
 @app.post("/api/chat/summarize")
-def summarize_call(req: SummarizeRequest):
-    """Generate and persist structured call summary."""
+async def summarize_call(req: SummarizeRequest):
+    """Generate and persist structured call summary asynchronously."""
     from intelligence.summarizer import generate_call_summary, save_call_summary
     from services.crm import save_conversation, end_conversation
     from agent.tools import ollama_generate
 
     appointment = req.booking_request.get("appointment") if req.booking_request else None
 
-    summary = generate_call_summary(
+    summary = await asyncio.to_thread(
+        generate_call_summary,
         conversation_history=req.conversation_history,
         customer_context=req.customer_context,
         lead_score=req.lead_score,
@@ -319,28 +331,32 @@ def summarize_call(req: SummarizeRequest):
         llm_fn=ollama_generate,
     )
 
-    conv_id = save_conversation(req.session_id, req.customer_id)
-    if conv_id and summary:
-        save_call_summary(conv_id, req.customer_id, summary)
-        end_conversation(conv_id, req.lead_score, req.sentiment.get("overall", "neutral"))
+    def _persist_summary():
+        conv_id = save_conversation(req.session_id, req.customer_id)
+        if conv_id and summary:
+            save_call_summary(conv_id, req.customer_id, summary)
+            end_conversation(conv_id, req.lead_score, req.sentiment.get("overall", "neutral"))
 
+    await asyncio.to_thread(_persist_summary)
     return {"status": "ok", "summary": summary}
 
 
 # ─── CRM ──────────────────────────────────────────────────────────────────────
 
 @app.get("/api/customers")
-def list_customers(
+async def list_customers(
     search: str = Query("", description="Search name, email, or company"),
     category: Optional[str] = Query(None, description="HOT, WARM, COLD"),
     sentiment: Optional[str] = Query(None, description="positive, neutral, negative"),
 ):
-    """List and filter customers from NeonDB."""
+    """List and filter customers from NeonDB asynchronously."""
     from services.crm import search_customers
 
     cat = category if category and category != "All" else None
     sent = sentiment if sentiment and sentiment != "All" else None
-    customers = search_customers(query=search, lead_category=cat, sentiment=sent, limit=100)
+    customers = await asyncio.to_thread(
+        search_customers, query=search, lead_category=cat, sentiment=sent, limit=100
+    )
 
     # Serialize UUID/Decimal/datetime cleanly
     cleaned = []
@@ -369,11 +385,11 @@ def list_customers(
 # ─── KNOWLEDGE BASE (RAG) ─────────────────────────────────────────────────────
 
 @app.get("/api/documents")
-def list_documents():
-    """List indexed documents."""
+async def list_documents():
+    """List indexed documents asynchronously."""
     from rag.retriever import get_indexed_documents
 
-    docs = get_indexed_documents()
+    docs = await asyncio.to_thread(get_indexed_documents)
     return {
         "documents": [
             {
@@ -411,7 +427,8 @@ async def upload_document(file: UploadFile = File(...)):
         named_path = Path(tmp_dir) / Path(file.filename).name
         named_path.write_bytes(content)
 
-        result = ingest_document(
+        result = await asyncio.to_thread(
+            ingest_document,
             str(named_path),
             embedding_fn=generate_embedding,
             store_chunks_fn=store_chunks,
@@ -429,22 +446,22 @@ async def upload_document(file: UploadFile = File(...)):
 
 
 @app.post("/api/documents/query")
-def query_documents(req: RagQueryRequest):
-    """Run semantic similarity search against PgVector."""
+async def query_documents(req: RagQueryRequest):
+    """Run semantic similarity search against PgVector asynchronously."""
     from rag.retriever import retrieve_relevant_chunks
 
-    chunks = retrieve_relevant_chunks(req.query, top_k=req.top_k)
+    chunks = await asyncio.to_thread(retrieve_relevant_chunks, req.query, top_k=req.top_k)
     return {"chunks": chunks}
 
 
 # ─── APPOINTMENTS ─────────────────────────────────────────────────────────────
 
 @app.get("/api/appointments")
-def list_appointments():
-    """List booked and cancelled appointments."""
+async def list_appointments():
+    """List booked and cancelled appointments asynchronously."""
     from services.calendar import get_appointments
 
-    appts = get_appointments(limit=50)
+    appts = await asyncio.to_thread(get_appointments, limit=50)
     return {
         "appointments": [
             {
@@ -462,19 +479,19 @@ def list_appointments():
 
 
 @app.get("/api/appointments/slots")
-def list_available_slots():
-    """List upcoming available appointment slots."""
+async def list_available_slots():
+    """List upcoming available appointment slots asynchronously."""
     from services.calendar import get_available_slots
 
-    return {"slots": get_available_slots(days_ahead=14, limit=24)}
+    return {"slots": await asyncio.to_thread(get_available_slots, days_ahead=14, limit=24)}
 
 
 @app.post("/api/appointments/{appointment_id}/cancel")
-def cancel_appt(appointment_id: str):
-    """Cancel an appointment and free its slot."""
+async def cancel_appt(appointment_id: str):
+    """Cancel an appointment and free its slot asynchronously."""
     from services.calendar import cancel_appointment
 
-    ok = cancel_appointment(appointment_id)
+    ok = await asyncio.to_thread(cancel_appointment, appointment_id)
     if not ok:
         raise HTTPException(status_code=404, detail="Appointment not found")
     return {"status": "cancelled", "id": appointment_id}
@@ -483,8 +500,8 @@ def cancel_appt(appointment_id: str):
 # ─── ANALYTICS ────────────────────────────────────────────────────────────────
 
 @app.get("/api/analytics")
-def get_analytics():
-    """Return KPIs, chart distributions, recent call summaries, and follow-up recommendations."""
+async def get_analytics():
+    """Return KPIs, chart distributions, recent call summaries, and follow-up recommendations concurrently."""
     from intelligence.insights import (
         get_dashboard_kpis,
         get_lead_distribution_data,
@@ -494,14 +511,20 @@ def get_analytics():
         get_follow_up_recommendations,
     )
 
-    summaries = get_recent_summaries(limit=10)
-    recs = get_follow_up_recommendations()
+    kpis, lead_dist, sent_dist, calls_time, summaries, recs = await asyncio.gather(
+        asyncio.to_thread(get_dashboard_kpis),
+        asyncio.to_thread(get_lead_distribution_data),
+        asyncio.to_thread(get_sentiment_data),
+        asyncio.to_thread(get_calls_over_time),
+        asyncio.to_thread(get_recent_summaries, limit=10),
+        asyncio.to_thread(get_follow_up_recommendations),
+    )
 
     return {
-        "kpis": get_dashboard_kpis(),
-        "lead_distribution": get_lead_distribution_data(),
-        "sentiment_distribution": get_sentiment_data(),
-        "calls_over_time": get_calls_over_time(),
+        "kpis": kpis,
+        "lead_distribution": lead_dist,
+        "sentiment_distribution": sent_dist,
+        "calls_over_time": calls_time,
         "recent_summaries": [
             {
                 "id": str(s.get("id")),

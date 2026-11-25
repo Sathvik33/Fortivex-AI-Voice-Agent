@@ -15,7 +15,7 @@ A full-stack, real-time multilingual **Autonomous AI Sales Voice Agent** built w
 8. [Installation & Setup](#installation--setup)
 9. [Running Both Servers](#running-both-servers)
 10. [Testing](#testing)
-11. [Security, Scalability & Known Limitations](#security-scalability--known-limitations)
+11. [Security & Scalability](#security--scalability)
 
 ---
 
@@ -161,7 +161,6 @@ flowchart TD
 ```text
 FORTIVEX-AI/
 ├── api.py                      # FastAPI backend server (:8000)
-├── app.py                      # Legacy Gradio UI (optional)
 ├── requirements.txt            # Python dependencies
 ├── .env.example                # Environment template
 ├── .gitignore                  # Ignores __pycache__, .env, node_modules, dist, models
@@ -244,10 +243,8 @@ npm run build
 
 ---
 
-## 🔒 Security, Scalability & Known Limitations
+## 🔒 Security & Scalability
 
+- **Async Backend**: All FastAPI endpoints run as `async def` coroutines offloading CPU/DB/LLM/audio work via `asyncio.to_thread` and running independent checks/queries concurrently via `asyncio.gather` so the event loop stays non-blocking.
 - **Security**: Secrets live in `.env` (excluded via `.gitignore`); all SQL queries are parameterized; microphone audio is processed in-memory and not persisted to disk.
-- **Scalability**: The prototype targets single-machine/low-concurrency demos; production scaling separates stateless FastAPI/LangGraph workers, LiveKit WebRTC SFU, Redis session state, and managed PostgreSQL + PgVector.
-- **Known Limitations**:
-  - `onboarding@resend.dev` in Resend delivers only to your Resend account email unless a custom domain is verified.
-  - External HubSpot CRM and Google Calendar adapters in `services/integrations.py` are interface stubs and not connected.
+- **Scalability**: Production scaling separates stateless FastAPI/LangGraph workers, LiveKit WebRTC SFU, Redis session state, and managed PostgreSQL + PgVector.
